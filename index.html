@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenali Elemen Poster: Teks</title>
+    <title>Kenali Elemen Poster</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&family=Pacifico&display=swap');
@@ -13,8 +13,8 @@
             margin: 0;
             overflow: hidden;
             touch-action: manipulation;
-            /* Latar Belakang Polka Dot Pastel Animasi */
-            background-color: #fdf4ff; /* Ungu sangat cair */
+            /* Latar Belakang Polka Dot Pastel Animasi untuk Skrin Utama */
+            background-color: #fdf4ff;
             background-image: radial-gradient(#e879f9 2px, transparent 2px), radial-gradient(#e879f9 2px, transparent 2px);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
@@ -31,41 +31,45 @@
             letter-spacing: 1px;
         }
 
-        /* Skrin Utama & Tamat: Tema Kawaii mengikut gambar (Kuning, border hitam tebal) */
+        .screen-container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none; /* Dinyalakan melalui JS */
+        }
+
+        /* --- TEMA KAWAII BONGKAH --- */
         .kawaii-box {
-            background-color: #fef08a; /* Kuning pastel */
-            border: 6px solid #1e293b; /* Garisan hitam tebal */
+            background-color: #fef08a;
+            border: 6px solid #1e293b;
             border-radius: 24px;
-            box-shadow: 10px 10px 0px #c084fc; /* Bayang ungu tebal */
+            box-shadow: 10px 10px 0px #c084fc;
             position: relative;
         }
 
-        /* Butang Gaya Kawaii/Neo-Brutalism */
         .kawaii-btn {
-            background-color: #38bdf8; /* Biru terang */
+            background-color: #38bdf8;
             border: 4px solid #1e293b;
             box-shadow: 0px 8px 0px #1e293b;
             border-radius: 9999px;
             transition: all 0.1s;
+            cursor: pointer;
         }
         .kawaii-btn:active {
             transform: translateY(8px);
             box-shadow: 0px 0px 0px #1e293b;
         }
-        .kawaii-btn-green {
-            background-color: #4ade80; /* Hijau terang */
-        }
-        .kawaii-btn-red {
-            background-color: #ef4444; /* Merah terang */
-        }
+        .kawaii-btn-green { background-color: #4ade80; }
+        .kawaii-btn-red { background-color: #ef4444; }
+        .kawaii-btn-purple { background-color: #a855f7; }
 
-        /* Animasi untuk objek jatuh */
+        /* --- CSS PERINGKAT 1 (KLIK TEKS) --- */
         @keyframes fallDown {
             0% { top: -150px; transform: scale(1) rotate(0deg); opacity: 1; }
             100% { top: 110vh; transform: scale(1) rotate(10deg); opacity: 1; }
         }
-
-        /* Animasi Pop dan Shake */
         @keyframes popOut {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 10px #4ade80); }
@@ -78,7 +82,6 @@
             75% { transform: translateX(-15px) rotate(-5deg); }
             100% { transform: translateX(0); }
         }
-
         .falling-item {
             position: absolute;
             animation-name: fallDown;
@@ -91,7 +94,6 @@
             justify-content: center;
             background: white;
             border-radius: 20px; 
-            /* Garisan dan bayang tebal supaya menonjol dari latar belakang */
             border: 4px solid #1e293b; 
             box-shadow: 6px 6px 0px rgba(30, 41, 59, 0.2);
             width: auto;
@@ -103,200 +105,123 @@
             transition: transform 0.2s;
             z-index: 20;
         }
-
-        .falling-item:hover {
-            transform: scale(1.05);
-        }
-
+        .falling-item:hover { transform: scale(1.05); }
         @media (max-width: 768px) {
             .falling-item {
-                min-width: 110px;
-                min-height: 100px;
-                font-size: 2.5rem;
-                padding: 10px 15px;
-                border-width: 3px;
-                box-shadow: 4px 4px 0px rgba(30, 41, 59, 0.2);
+                min-width: 110px; min-height: 100px; font-size: 2.5rem;
+                padding: 10px 15px; border-width: 3px; box-shadow: 4px 4px 0px rgba(30, 41, 59, 0.2);
             }
         }
-
-        /* Gaya Teks */
         .text-style-1 { font-family: 'Pacifico', cursive; color: #0284c7; font-size: 2.2rem; transform: rotate(-5deg); }
         .text-style-2 { font-family: 'Fredoka One', cursive; color: #fbcfe8; -webkit-text-stroke: 2px #d946ef; font-size: 1.8rem; letter-spacing: 1px; text-shadow: 3px 3px 0px #1e293b; }
         .text-style-3 { font-family: 'Fredoka One', cursive; color: #166534; line-height: 0.8; font-size: 2.5rem; display: flex; flex-direction: column; align-items: center; text-shadow: 2px 2px 0px #86efac; }
         .text-style-3 span { font-family: 'Nunito', sans-serif; font-size: 0.3em; font-weight: 900; color: #15803d; letter-spacing: 1.5px; margin-bottom: -2px; }
         .text-style-4 { font-family: 'Nunito', sans-serif; font-weight: 900; color: #ffb3d9; text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f; letter-spacing: 2px; font-size: 2rem; -webkit-text-stroke: 1px #ff007f; }
 
-        .correct-anim {
-            animation: popOut 0.4s ease-out forwards !important;
-            background-color: #4ade80 !important; 
-            color: white !important;
-        }
-        .wrong-anim {
-            animation: shake 0.4s ease-in-out forwards !important;
-            background-color: #f87171 !important; 
-            color: white !important;
-        }
+        .correct-anim { animation: popOut 0.4s ease-out forwards !important; background-color: #4ade80 !important; color: white !important; }
+        .wrong-anim { animation: shake 0.4s ease-in-out forwards !important; background-color: #f87171 !important; color: white !important; }
 
-        #game-area {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: none;
-        }
+        .hud-box { background-color: white; border: 4px solid #1e293b; box-shadow: 4px 4px 0px #1e293b; }
+        .big-instruction { -webkit-text-stroke: 2px #1e293b; text-shadow: 3px 3px 0px #ef4444; }
 
-        /* --- STYLES UNTUK PERINGKAT 2 --- */
-        #game-2-area {
-            display: none;
-            width: 100vw;
-            height: 100vh;
-            background-color: #fdf4ff;
-            background-image: radial-gradient(#e879f9 2px, transparent 2px), radial-gradient(#e879f9 2px, transparent 2px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            overflow: hidden;
-        }
-
+        /* --- CSS PERINGKAT 2 (LABEL POSTER) --- */
         .board-half {
             width: 50%;
             height: 100%;
-            border-right: 6px dashed #cbd5e1;
-            padding: 15px;
             display: flex;
             flex-direction: column;
             position: relative;
         }
-        .board-half:last-child {
-            border-right: none;
+        /* Corak bintik untuk murid 1 dan 2 */
+        .bg-pattern-blue {
+            background-color: #eff6ff;
+            background-image: radial-gradient(#bae6fd 3px, transparent 3px);
+            background-size: 40px 40px;
+        }
+        .bg-pattern-pink {
+            background-color: #fdf2f8;
+            background-image: radial-gradient(#fbcfe8 3px, transparent 3px);
+            background-size: 40px 40px;
+        }
+        
+        .separator-line {
+            position: absolute;
+            top: 0; left: 50%;
+            height: 100%; width: 6px;
+            background-color: #cbd5e1;
+            transform: translateX(-50%);
+            border-left: 2px dashed #94a3b8;
+            z-index: 10;
         }
 
+        /* Zon Lepas (Dropzone) bergaris putus-putus */
         .dropzone {
-            width: 100%;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.9);
+            width: 90px;
+            height: 40px;
             border: 4px dashed #94a3b8;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-family: 'Fredoka One', cursive;
-            font-size: 1.5rem;
-            color: #94a3b8;
-        }
-
-        .draggable {
-            background-color: #fef08a;
-            border: 4px solid #1e293b;
-            box-shadow: 4px 4px 0px #1e293b;
-            border-radius: 15px;
-            padding: 10px 25px;
-            font-family: 'Fredoka One', cursive;
-            font-size: 1.6rem;
-            color: #1e293b;
-            cursor: grab;
-            touch-action: none; /* Penting untuk Smartboard Multi-touch */
-            user-select: none;
-            z-index: 50;
-            margin: 5px;
-            display: inline-block;
-        }
-        .draggable.dragging {
-            opacity: 0.9;
-            transform: scale(1.1);
-            box-shadow: 8px 8px 0px #1e293b;
-            z-index: 9999 !important;
-        }
-        
-        .drop-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            filter: drop-shadow(2px 2px 0px #cbd5e1);
-        }
-        
-        .poster-container {
-            display: flex;
-            gap: 15px;
-            flex-grow: 1;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        
-        .poster-img {
-            max-width: 45%;
-            max-height: 40vh;
-            border: 6px solid #1e293b;
-            border-radius: 20px;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
-            object-fit: contain;
-            background: white;
-        }
-        
-        .dropzone-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
-        
-        .pool-container {
             background-color: rgba(255, 255, 255, 0.6);
-            border: 4px solid #1e293b;
-            border-radius: 20px;
-            padding: 15px;
-            min-height: 120px;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        @media (min-width: 768px) {
+            .dropzone { width: 120px; height: 50px; }
+        }
+
+        /* Item Seret (Draggable) */
+        .draggable {
+            position: absolute;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             align-items: center;
-            box-shadow: inset 0px 4px 10px rgba(0,0,0,0.1);
+            justify-content: center;
+            background: white;
+            border-radius: 9999px;
+            font-weight: 900;
+            cursor: grab;
+            user-select: none;
+            touch-action: none; /* Penting untuk multi-touch */
+            box-shadow: 0px 4px 0px rgba(30, 41, 59, 0.2);
+            transition: transform 0.1s;
         }
-        
-        /* Modifikasi Draggable semasa ia diletakkan dalam Dropzone */
-        .dropzone .draggable {
-            margin: 0;
-            box-shadow: none;
-            width: auto;
-            transform: scale(0.95);
-        }
+        .draggable:active { cursor: grabbing; transform: scale(1.05); }
 
-        /* Hiasan Dekorasi Skrin Mula */
-        .cute-deco {
-            font-size: 4rem;
-            animation: bounce 2s infinite ease-in-out;
-            display: inline-block;
-            margin: 0 10px;
-            filter: drop-shadow(3px 3px 0px #1e293b);
-        }
-        .cute-deco:nth-child(2) { animation-delay: 0.2s; font-size: 5rem; }
-        .cute-deco:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Kotak Masa dan Markah */
-        .hud-box {
-            background-color: white;
-            border: 4px solid #1e293b;
-            box-shadow: 4px 4px 0px #1e293b;
-        }
-        
-        /* Teks Penegasan Bawah */
-        .big-instruction {
-            -webkit-text-stroke: 2px #1e293b; 
-            text-shadow: 3px 3px 0px #ef4444;
-        }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <!-- SKRIN MULA -->
-    <div id="start-screen" class="flex flex-col items-center justify-center w-screen h-screen z-50 absolute top-0 left-0 p-4">
-        
-        <!-- Arahan Penegasan Merah (Skrin Mula) -->
+    <!-- Audio Muzik Latar -->
+    <audio id="bg-music" loop>
+        <source src="Journey(chosic.com).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ========================================== -->
+    <!-- MENU UTAMA                                 -->
+    <!-- ========================================== -->
+    <div id="main-menu" class="screen-container flex flex-col items-center justify-center z-50 p-4" style="display: flex;">
+        <div class="kawaii-box p-8 md:p-12 text-center max-w-2xl w-full flex flex-col items-center">
+            <h1 class="text-4xl md:text-5xl text-sky-500 mb-6 font-heading" style="-webkit-text-stroke: 1px #1e293b; text-shadow: 3px 3px 0px #1e293b;">MENU UTAMA</h1>
+            
+            <div class="flex flex-col gap-4 w-full px-4 md:px-12">
+                <button onclick="showIntroScreen()" class="font-heading kawaii-btn kawaii-btn-green text-white text-2xl py-4 w-full" style="-webkit-text-stroke: 1px #064e3b;">
+                    1. INTRO (KLIK TEKS)
+                </button>
+                <button onclick="startPenutup()" class="font-heading kawaii-btn kawaii-btn-purple text-white text-2xl py-4 w-full" style="-webkit-text-stroke: 1px #4c1d95;">
+                    2. PENUTUP (LABEL POSTER)
+                </button>
+            </div>
+
+            <div class="mt-8 flex justify-center items-end text-5xl drop-shadow-md gap-4">
+                <div class="animate-bounce" style="animation-delay: 0.1s">🖨️</div>
+                <div class="animate-bounce text-6xl" style="animation-delay: 0.2s">🖥️</div>
+                <div class="animate-bounce" style="animation-delay: 0.3s">🖱️</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PERINGKAT 1: SKRIN MULA                    -->
+    <!-- ========================================== -->
+    <div id="start-screen" class="screen-container flex-col items-center justify-center z-50 p-4">
         <div class="mb-4 z-10">
             <div class="bg-red-500 border-4 border-slate-800 rounded-full py-3 px-8 shadow-[4px_4px_0px_#1e293b] animate-pulse">
                 <p class="text-2xl md:text-4xl font-extrabold text-white tracking-wide text-center font-heading" style="text-shadow: 2px 2px 0px #991b1b;">MARI PILIH ELEMEN TEKS SAHAJA!</p>
@@ -304,58 +229,46 @@
         </div>
 
         <div class="kawaii-box p-8 md:p-10 text-center max-w-2xl w-full flex flex-col items-center">
-            
-            <h1 class="text-4xl md:text-5xl text-sky-500 mb-2 font-heading" style="-webkit-text-stroke: 1px #1e293b; text-shadow: 3px 3px 0px #1e293b;">Peringkat 1: Kenali Teks</h1>
+            <h1 class="text-4xl md:text-5xl text-sky-500 mb-2 font-heading" style="-webkit-text-stroke: 1px #1e293b; text-shadow: 3px 3px 0px #1e293b;">Kenali Teks</h1>
             <p class="text-xl font-black text-slate-700 mb-4">Pilih kotak yang mengandungi TEKS sahaja!</p>
 
             <div class="bg-white border-4 border-slate-800 p-4 rounded-2xl mb-6 text-left w-full shadow-[4px_4px_0px_#cbd5e1]">
                 <p class="text-lg font-bold mb-2 text-slate-800">📌 Cara Bermain:</p>
                 <ul class="text-md md:text-lg list-disc pl-5 space-y-1 text-slate-700 font-bold">
                     <li>Klik pada kad yang mengandungi <b class="text-sky-500">TEKS</b>.</li>
-                    <li>Teks mempunyai pelbagai gaya tulisan menarik.</li>
                     <li><span class="text-red-500">JANGAN</span> klik simbol gambar, muzik, atau video!</li>
                     <li>Masa diberikan ialah <b>2 minit</b>.</li>
                 </ul>
             </div>
             
-            <button onclick="startGame()" class="font-heading kawaii-btn kawaii-btn-green text-white text-3xl py-4 px-12 z-10" style="-webkit-text-stroke: 1px #064e3b;">
-                MULA MAIN!
-            </button>
-
-            <!-- Hiasan Komputer Comel di bawah kotak -->
-            <div class="mt-4 flex justify-center items-end">
-                <div class="cute-deco">🖨️</div>
-                <div class="cute-deco">🖥️</div>
-                <div class="cute-deco">🖱️</div>
+            <div class="flex gap-4">
+                <button onclick="goToMenu()" class="font-heading kawaii-btn kawaii-btn-red text-white text-2xl py-3 px-6 z-10" style="-webkit-text-stroke: 1px #450a0a;">KEMBALI</button>
+                <button onclick="startGame()" class="font-heading kawaii-btn kawaii-btn-green text-white text-3xl py-3 px-10 z-10" style="-webkit-text-stroke: 1px #064e3b;">MULA!</button>
             </div>
         </div>
     </div>
 
-    <!-- KAWASAN PERMAINAN -->
-    <div id="game-area">
-        <!-- Paparan Atas (Markah, Masa & Butang Tamat) -->
+
+    <!-- ========================================== -->
+    <!-- PERINGKAT 1: KAWASAN PERMAINAN             -->
+    <!-- ========================================== -->
+    <div id="game-area" class="screen-container">
         <div class="absolute top-0 left-0 w-full p-2 md:p-4 flex justify-between items-start z-40 pointer-events-none">
-            
-            <!-- Kotak Markah -->
             <div class="hud-box px-4 py-2 md:px-6 md:py-3 rounded-full pointer-events-auto">
                 <span class="text-xl md:text-2xl font-bold text-slate-800 font-heading">Markah: <span id="score" class="text-2xl md:text-3xl text-sky-500" style="-webkit-text-stroke: 1px #1e293b;">0</span></span>
             </div>
             
-            <!-- Bahagian Kanan: Masa & Butang Tamat -->
             <div class="flex flex-col md:flex-row items-end md:items-center gap-2">
                 <div class="hud-box px-4 py-2 md:px-6 md:py-3 rounded-full pointer-events-auto flex items-center">
                     <span class="text-xl md:text-2xl mr-2">⏱️</span>
                     <span id="timer" class="text-2xl md:text-3xl font-bold text-slate-800 font-heading">02:00</span>
                 </div>
-                <!-- BUTANG TAMAT -->
                 <button onclick="endGame()" class="kawaii-btn kawaii-btn-red text-white font-heading px-4 py-2 md:px-6 md:py-3 pointer-events-auto" style="-webkit-text-stroke: 1px #450a0a; border-width: 3px; box-shadow: 0px 4px 0px #1e293b;">
                     <span class="text-lg md:text-xl">TAMAT</span>
                 </button>
             </div>
-
         </div>
 
-        <!-- ARAHAN BESAR SEMASA MAIN (BAHAGIAN BAWAH) -->
         <div class="absolute bottom-6 left-0 w-full text-center z-30 pointer-events-none px-4">
             <div class="inline-block bg-white/70 backdrop-blur-sm border-4 border-slate-800 rounded-3xl px-6 py-2 shadow-[4px_4px_0px_#1e293b]">
                 <h2 class="text-3xl md:text-5xl lg:text-6xl text-white font-heading animate-pulse big-instruction">
@@ -364,12 +277,14 @@
             </div>
         </div>
         
-        <!-- Bekas untuk objek jatuh -->
         <div id="items-container" class="w-full h-full absolute top-0 left-0"></div>
     </div>
 
-    <!-- SKRIN TAMAT -->
-    <div id="end-screen" class="flex flex-col items-center justify-center w-screen h-screen z-50 absolute top-0 left-0 hidden p-4">
+
+    <!-- ========================================== -->
+    <!-- PERINGKAT 1: SKRIN TAMAT                   -->
+    <!-- ========================================== -->
+    <div id="end-screen" class="screen-container flex-col items-center justify-center z-50 p-4">
         <div class="kawaii-box p-8 md:p-12 text-center max-w-xl w-full">
             <h1 class="text-5xl text-orange-400 mb-4 font-heading" style="-webkit-text-stroke: 2px #1e293b; text-shadow: 4px 4px 0px #1e293b;">Tamat!</h1>
             <p class="text-2xl mb-6 font-black text-slate-800">Syabas! Anda hebat!</p>
@@ -379,214 +294,222 @@
                 <p class="text-7xl font-heading text-green-400 mt-2" id="final-score" style="-webkit-text-stroke: 3px #1e293b; text-shadow: 5px 5px 0px #1e293b;">0</p>
             </div>
             
-            <div class="flex flex-col gap-4 items-center w-full">
-                <button onclick="goToPeringkat2()" class="font-heading kawaii-btn kawaii-btn-green text-white text-2xl py-4 px-10 w-full" style="-webkit-text-stroke: 1px #064e3b;">
+            <div class="flex flex-col gap-3">
+                <button onclick="startPenutup()" class="font-heading kawaii-btn kawaii-btn-purple text-white text-2xl py-4 px-10" style="-webkit-text-stroke: 1px #4c1d95;">
                     SETERUSNYA: LABEL POSTER
                 </button>
-                <button onclick="resetGame()" class="font-heading kawaii-btn text-white text-xl py-3 px-8 w-full" style="-webkit-text-stroke: 1px #0c4a6e;">
-                    MAIN SEMULA PERINGKAT 1
+                <button onclick="goToMenu()" class="font-heading kawaii-btn bg-white text-slate-800 text-xl py-3 px-10">
+                    KEMBALI KE MENU
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- SKRIN PERINGKAT 2 (MULTI-TOUCH DRAG & DROP UNTUK SMARTBOARD) -->
-    <div id="game-2-area" class="flex w-full h-full relative">
-        <!-- Arahan Atas Tengah -->
-        <div class="absolute top-2 left-1/2 transform -translate-x-1/2 bg-white border-4 border-slate-800 rounded-full px-8 py-2 shadow-[4px_4px_0px_#1e293b] z-50 pointer-events-none text-center">
-            <h2 class="text-2xl md:text-3xl font-heading text-sky-500" style="-webkit-text-stroke: 1px #1e293b;">Peringkat 2: Label Poster</h2>
-        </div>
 
-        <!-- MURID 1 (BAHAGIAN KIRI) -->
-        <div class="board-half bg-sky-100/80">
-            <div class="text-center mb-2 mt-12">
-                <span class="bg-blue-400 text-white font-heading px-6 py-2 rounded-xl border-4 border-slate-800 shadow-[4px_4px_0px_#1e293b] text-3xl" style="-webkit-text-stroke: 1px #1e293b;">MURID 1</span>
+    <!-- ========================================== -->
+    <!-- PERINGKAT 2: LABEL POSTER (SPLIT SCREEN)   -->
+    <!-- ========================================== -->
+    <div id="game-2-area" class="screen-container">
+        
+        <!-- Header Atas: Tajuk & Butang Kembali -->
+        <div class="absolute top-4 w-full flex justify-between items-center px-6 z-50 pointer-events-none">
+            <div class="bg-white text-purple-700 font-heading px-6 md:px-10 py-2 rounded-full border-4 border-slate-800 shadow-[4px_4px_0px_#1e293b] text-2xl md:text-3xl mx-auto pointer-events-auto" style="-webkit-text-stroke: 1px #1e293b; color: white; text-shadow: 2px 2px 0px #7e22ce;">
+                Penutup: Label Poster
             </div>
             
-            <div class="poster-container">
-                <!-- Rujukan gambar cikgu (poster.jpg) -->
-                <img src="poster.jpg" alt="Poster Pameran" class="poster-img" onerror="this.src='https://placehold.co/400x600/f8fafc/1e293b?text=Gambar+Poster'">
+            <button onclick="goToMenu()" class="absolute right-4 font-heading kawaii-btn bg-white text-slate-700 text-sm md:text-lg px-4 py-2 pointer-events-auto flex items-center gap-2" style="border-width: 3px;">
+                <span>🏠</span> Kembali
+            </button>
+        </div>
+
+        <div class="separator-line"></div>
+
+        <!-- ================= MURID 1 (KIRI) ================= -->
+        <div class="board-half bg-pattern-blue">
+            <div class="text-center mb-0 mt-24">
+                <span class="bg-blue-400 text-white font-heading px-8 py-2 rounded-xl border-4 border-slate-800 shadow-[4px_4px_0px_#1e293b] text-2xl md:text-3xl" style="-webkit-text-stroke: 1px #1e293b;">MURID 1</span>
+            </div>
+            
+            <!-- Poster dan Dropzone -->
+            <div class="relative flex justify-center items-center flex-grow mt-4 w-full px-2">
+                <!-- Wrapper Imej yang tepat seperti gambar (pr membolehkan garisan ke kanan) -->
+                <div class="relative inline-block h-[40vh] md:h-[45vh] pr-[120px] md:pr-[150px]"> 
+                    <img src="poster.jpg" alt="Poster Pameran" class="h-full w-auto object-contain border-4 border-slate-800 rounded-xl shadow-[6px_6px_0px_#cbd5e1] bg-white relative z-10" onerror="this.src='https://placehold.co/400x600/f8fafc/1e293b?text=Gambar+Poster'">
+                    
+                    <!-- Penunjuk Teks -->
+                    <div class="absolute top-[22%] left-full flex items-center z-20 -ml-1">
+                        <div class="h-1.5 md:h-2 w-16 md:w-20 bg-slate-800 rounded-r-full shadow-sm"></div>
+                        <div class="dropzone -ml-1" data-player="1" data-zone="teks"></div>
+                    </div>
+
+                    <!-- Penunjuk Grafik -->
+                    <div class="absolute top-[68%] left-full flex items-center z-20 -ml-1">
+                        <div class="h-1.5 md:h-2 w-16 md:w-20 bg-slate-800 rounded-r-full shadow-sm"></div>
+                        <div class="dropzone -ml-1" data-player="1" data-zone="grafik"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arahan & Ruang Draggable -->
+            <div class="pb-6 px-4 flex flex-col items-center">
+                <div class="text-center font-bold text-slate-700 bg-white rounded-full py-1 px-6 border-2 border-slate-800 text-sm md:text-base w-fit mb-2 shadow-sm">Tarik Teks dan Grafik sahaja:</div>
                 
-                <div class="dropzone-container">
-                    <div class="dropzone" data-player="1" data-zone="teks"><span class="drop-icon">📝</span> ........</div>
-                    <div class="dropzone" data-player="1" data-zone="grafik"><span class="drop-icon">🖼️</span> ........</div>
-                    <div class="dropzone" data-player="1" data-zone="animasi"><span class="drop-icon">✨</span> ........</div>
-                    <div class="dropzone" data-player="1" data-zone="audio"><span class="drop-icon">🔊</span> ........</div>
-                    <div class="dropzone" data-player="1" data-zone="video"><span class="drop-icon">🎬</span> ........</div>
+                <div id="drag-container-1" class="w-11/12 max-w-sm h-16 md:h-20 bg-white border-4 border-slate-800 rounded-xl shadow-[4px_4px_0px_#94a3b8] mb-4 flex items-center justify-center relative">
+                    <!-- Bongkah akan dijana di sini -->
                 </div>
-            </div>
 
-            <div class="text-center font-bold text-slate-700 mb-2 bg-white/80 rounded-full py-1 border-2 border-slate-800 text-lg">Tarik label di bawah ke kotak ikon yang betul:</div>
-            
-            <div id="pool-player1" class="pool-container mb-4">
-                <!-- Dijana menggunakan Javascript -->
-            </div>
-
-            <div class="text-center mt-auto pb-4">
-                <button onclick="checkAnswer(1)" class="kawaii-btn kawaii-btn-green text-white font-heading text-2xl py-3 px-8 w-full border-4 shadow-[4px_4px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">
+                <button onclick="checkAnswers(1)" class="w-11/12 max-w-sm font-heading kawaii-btn kawaii-btn-green text-white text-xl md:text-2xl py-3 border-4 border-slate-800 shadow-[0px_6px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">
                     SEMAK JAWAPAN
                 </button>
-            </div>
-            
-            <!-- Keputusan Murid 1 -->
-            <div id="result-modal-1" class="hidden absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                <div class="bg-white border-4 border-slate-800 rounded-3xl p-8 text-center shadow-[8px_8px_0px_#1e293b] max-w-sm w-full">
-                    <h3 class="text-4xl font-heading text-sky-500 mb-2" style="-webkit-text-stroke: 1px #1e293b;">Keputusan</h3>
-                    <p class="text-7xl font-heading text-green-500 my-4" style="-webkit-text-stroke: 2px #1e293b;"><span id="score-text-1">0</span>/5</p>
-                    <p id="msg-text-1" class="text-2xl font-bold text-slate-700 mb-6">...</p>
-                    <button onclick="closeModal(1)" class="kawaii-btn kawaii-btn-green text-white font-heading text-2xl py-3 px-8 border-4 shadow-[4px_4px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">TUTUP</button>
-                </div>
             </div>
         </div>
 
-        <!-- MURID 2 (BAHAGIAN KANAN) -->
-        <div class="board-half bg-pink-100/80">
-            <div class="text-center mb-2 mt-12">
-                <span class="bg-pink-400 text-white font-heading px-6 py-2 rounded-xl border-4 border-slate-800 shadow-[4px_4px_0px_#1e293b] text-3xl" style="-webkit-text-stroke: 1px #1e293b;">MURID 2</span>
+        <!-- ================= MURID 2 (KANAN) ================= -->
+        <div class="board-half bg-pattern-pink">
+            <div class="text-center mb-0 mt-24">
+                <span class="bg-pink-400 text-white font-heading px-8 py-2 rounded-xl border-4 border-slate-800 shadow-[4px_4px_0px_#1e293b] text-2xl md:text-3xl" style="-webkit-text-stroke: 1px #1e293b;">MURID 2</span>
             </div>
             
-            <div class="poster-container">
-                <div class="dropzone-container">
-                    <div class="dropzone" data-player="2" data-zone="teks"><span class="drop-icon">📝</span> ........</div>
-                    <div class="dropzone" data-player="2" data-zone="grafik"><span class="drop-icon">🖼️</span> ........</div>
-                    <div class="dropzone" data-player="2" data-zone="animasi"><span class="drop-icon">✨</span> ........</div>
-                    <div class="dropzone" data-player="2" data-zone="audio"><span class="drop-icon">🔊</span> ........</div>
-                    <div class="dropzone" data-player="2" data-zone="video"><span class="drop-icon">🎬</span> ........</div>
+            <!-- Poster dan Dropzone -->
+            <div class="relative flex justify-center items-center flex-grow mt-4 w-full px-2">
+                <div class="relative inline-block h-[40vh] md:h-[45vh] pr-[120px] md:pr-[150px]"> 
+                    <img src="poster.jpg" alt="Poster Pameran" class="h-full w-auto object-contain border-4 border-slate-800 rounded-xl shadow-[6px_6px_0px_#cbd5e1] bg-white relative z-10" onerror="this.src='https://placehold.co/400x600/f8fafc/1e293b?text=Gambar+Poster'">
+                    
+                    <div class="absolute top-[22%] left-full flex items-center z-20 -ml-1">
+                        <div class="h-1.5 md:h-2 w-16 md:w-20 bg-slate-800 rounded-r-full shadow-sm"></div>
+                        <div class="dropzone -ml-1" data-player="2" data-zone="teks"></div>
+                    </div>
+
+                    <div class="absolute top-[68%] left-full flex items-center z-20 -ml-1">
+                        <div class="h-1.5 md:h-2 w-16 md:w-20 bg-slate-800 rounded-r-full shadow-sm"></div>
+                        <div class="dropzone -ml-1" data-player="2" data-zone="grafik"></div>
+                    </div>
                 </div>
-                <!-- Poster di sebelah kanan untuk variasi ruang -->
-                <img src="poster.jpg" alt="Poster Pameran" class="poster-img" onerror="this.src='https://placehold.co/400x600/f8fafc/1e293b?text=Gambar+Poster'">
             </div>
 
-            <div class="text-center font-bold text-slate-700 mb-2 bg-white/80 rounded-full py-1 border-2 border-slate-800 text-lg">Tarik label di bawah ke kotak ikon yang betul:</div>
-            
-            <div id="pool-player2" class="pool-container mb-4">
-                 <!-- Dijana menggunakan Javascript -->
-            </div>
+            <!-- Arahan & Ruang Draggable -->
+            <div class="pb-6 px-4 flex flex-col items-center">
+                <div class="text-center font-bold text-slate-700 bg-white rounded-full py-1 px-6 border-2 border-slate-800 text-sm md:text-base w-fit mb-2 shadow-sm">Tarik Teks dan Grafik sahaja:</div>
+                
+                <div id="drag-container-2" class="w-11/12 max-w-sm h-16 md:h-20 bg-white border-4 border-slate-800 rounded-xl shadow-[4px_4px_0px_#94a3b8] mb-4 flex items-center justify-center relative">
+                    <!-- Bongkah akan dijana di sini -->
+                </div>
 
-            <div class="text-center mt-auto pb-4">
-                <button onclick="checkAnswer(2)" class="kawaii-btn kawaii-btn-green text-white font-heading text-2xl py-3 px-8 w-full border-4 shadow-[4px_4px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">
+                <button onclick="checkAnswers(2)" class="w-11/12 max-w-sm font-heading kawaii-btn kawaii-btn-green text-white text-xl md:text-2xl py-3 border-4 border-slate-800 shadow-[0px_6px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">
                     SEMAK JAWAPAN
                 </button>
-            </div>
-            
-            <!-- Keputusan Murid 2 -->
-            <div id="result-modal-2" class="hidden absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                <div class="bg-white border-4 border-slate-800 rounded-3xl p-8 text-center shadow-[8px_8px_0px_#1e293b] max-w-sm w-full">
-                    <h3 class="text-4xl font-heading text-pink-500 mb-2" style="-webkit-text-stroke: 1px #1e293b;">Keputusan</h3>
-                    <p class="text-7xl font-heading text-green-500 my-4" style="-webkit-text-stroke: 2px #1e293b;"><span id="score-text-2">0</span>/5</p>
-                    <p id="msg-text-2" class="text-2xl font-bold text-slate-700 mb-6">...</p>
-                    <button onclick="closeModal(2)" class="kawaii-btn kawaii-btn-green text-white font-heading text-2xl py-3 px-8 border-4 shadow-[4px_4px_0px_#1e293b]" style="-webkit-text-stroke: 1px #064e3b;">TUTUP</button>
-                </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Maklum Balas Peringkat 2 -->
+    <div id="feedback-modal" class="fixed top-0 left-0 w-full h-full bg-slate-900/60 z-[100] hidden flex-col items-center justify-center">
+        <div class="bg-white border-4 border-slate-800 rounded-3xl p-8 md:p-12 text-center max-w-md w-11/12 shadow-[8px_8px_0px_#1e293b] transform transition-transform scale-95" id="feedback-content">
+            <div id="feedback-emoji" class="text-7xl mb-4 animate-bounce">🌟</div>
+            <h2 id="feedback-title" class="text-4xl font-heading mb-2" style="-webkit-text-stroke: 1px #1e293b;">Syabas!</h2>
+            <p id="feedback-text" class="text-2xl font-bold text-slate-700 mb-8">Anda Hebat!</p>
+            <button onclick="closeFeedback()" class="font-heading kawaii-btn kawaii-btn-green text-white text-2xl py-3 px-10 w-full" style="-webkit-text-stroke: 1px #064e3b;">
+                TUTUP
+            </button>
+        </div>
+    </div>
+
 
     <script>
-        // --- DATA PERMAINAN ---
-        const correctItems = [
-            '<div class="text-style-1">Thank<br>you!</div>',
-            '<div class="text-style-2">SUPER<br>KAWAII</div>',
-            '<div class="text-style-3"><span>YOU ARE THE</span>best</div>',
-            '<div class="text-style-4">GLOW</div>',
-            '<div class="text-style-1" style="color: #ea580c; transform: rotate(-8deg);">Hebat!</div>', 
-            '<div class="text-style-2" style="color: #67e8f9; -webkit-text-stroke: 2px #0891b2;">KREATIF</div>', 
-            '<div class="text-style-4" style="color: #fde047; text-shadow: 0 0 5px #ca8a04, 0 0 10px #ca8a04">MANTAP</div>',
-            '<div class="text-style-3" style="color: #ef4444;"><span>TEKS ITU</span>Penting</div>'
-        ];
-        
-        const wrongItems = [
-            '🖼️', '🎨', '📸', // Grafik
-            '🎵', '🎧', '🔊', // Audio
-            '🎬', '🎥', '📺', // Video
-            '✨', '🏃', '🎇'  // Animasi
-        ];
-
-        // --- PEMBOLEH UBAH PERMAINAN ---
-        let score = 0;
-        let timeLeft = 120; // 2 minit
-        let gameInterval;
-        let spawnInterval;
+        // ==========================================
+        // SISTEM AUDIO (Berjalan tanpa fail MP3 luaran untuk kesan bunyi)
+        // ==========================================
         let audioCtx;
-        let isPlaying = false;
-
-        const startScreen = document.getElementById('start-screen');
-        const gameArea = document.getElementById('game-area');
-        const endScreen = document.getElementById('end-screen');
-        const scoreDisplay = document.getElementById('score');
-        const timerDisplay = document.getElementById('timer');
-        const itemsContainer = document.getElementById('items-container');
-        const finalScoreDisplay = document.getElementById('final-score');
-
         function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
         }
 
         function playCorrectSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
             osc.type = 'sine'; 
             osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
             osc.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.1); 
-            
             gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); 
-            
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
 
         function playWrongSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
             osc.type = 'square'; 
             osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
             osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
-            
             gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
 
-        function startGame() {
+        // ==========================================
+        // KAWALAN SKRIN / MENU
+        // ==========================================
+        function hideAllScreens() {
+            document.querySelectorAll('.screen-container').forEach(el => el.style.display = 'none');
+        }
+
+        function goToMenu() {
+            hideAllScreens();
+            document.getElementById('main-menu').style.display = 'flex';
+            isPlaying = false;
+            clearInterval(gameInterval);
+            clearInterval(spawnInterval);
             initAudio(); 
             
-            score = 0;
-            timeLeft = 120;
-            isPlaying = true;
-            
-            scoreDisplay.innerText = score;
+            // Hentikan muzik latar
+            const bgMusic = document.getElementById('bg-music');
+            if (bgMusic) bgMusic.pause();
+        }
+
+        function showIntroScreen() {
+            hideAllScreens();
+            document.getElementById('start-screen').style.display = 'flex';
+            initAudio();
+        }
+
+
+        // ==========================================
+        // LOGIK PERINGKAT 1 (KLIK TEKS)
+        // ==========================================
+        const correctItems = [
+            '<div class="text-style-1">Thank<br>you!</div>', '<div class="text-style-2">SUPER<br>KAWAII</div>',
+            '<div class="text-style-3"><span>YOU ARE THE</span>best</div>', '<div class="text-style-4">GLOW</div>',
+            '<div class="text-style-1" style="color: #ea580c; transform: rotate(-8deg);">Hebat!</div>', 
+            '<div class="text-style-2" style="color: #67e8f9; -webkit-text-stroke: 2px #0891b2;">KREATIF</div>', 
+            '<div class="text-style-4" style="color: #fde047; text-shadow: 0 0 5px #ca8a04, 0 0 10px #ca8a04">MANTAP</div>',
+            '<div class="text-style-3" style="color: #ef4444;"><span>TEKS ITU</span>Penting</div>'
+        ];
+        
+        const wrongItems = ['🖼️', '🎨', '📸', '🎵', '🎧', '🔊', '🎬', '🎥', '📺', '✨', '🏃', '🎇'];
+
+        let score = 0;
+        let timeLeft = 120;
+        let gameInterval;
+        let spawnInterval;
+        let isPlaying = false;
+
+        function startGame() {
+            score = 0; timeLeft = 120; isPlaying = true;
+            document.getElementById('score').innerText = score;
             updateTimerDisplay();
+            document.getElementById('items-container').innerHTML = ''; 
             
-            itemsContainer.innerHTML = ''; 
-            
-            startScreen.classList.add('hidden');
-            endScreen.classList.add('hidden');
-            gameArea.style.display = 'block';
+            hideAllScreens();
+            document.getElementById('game-area').style.display = 'block';
             
             gameInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    endGame();
-                }
+                timeLeft--; updateTimerDisplay();
+                if (timeLeft <= 0) endGame();
             }, 1000);
             
             spawnInterval = setInterval(spawnItem, 1500); 
@@ -595,25 +518,22 @@
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
+            const timerDisplay = document.getElementById('timer');
             timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
             if (timeLeft <= 10) {
-                timerDisplay.classList.remove('text-slate-800');
-                timerDisplay.classList.add('text-red-500', 'animate-pulse');
+                timerDisplay.classList.remove('text-slate-800'); timerDisplay.classList.add('text-red-500', 'animate-pulse');
             } else {
-                timerDisplay.classList.add('text-slate-800');
-                timerDisplay.classList.remove('text-red-500', 'animate-pulse');
+                timerDisplay.classList.add('text-slate-800'); timerDisplay.classList.remove('text-red-500', 'animate-pulse');
             }
         }
 
         function spawnItem() {
             if (!isPlaying) return;
-
             const item = document.createElement('div');
             item.className = 'falling-item';
             
             const isCorrect = Math.random() < 0.65; 
-            
             if (isCorrect) {
                 item.innerHTML = correctItems[Math.floor(Math.random() * correctItems.length)];
                 item.dataset.type = 'correct';
@@ -624,269 +544,257 @@
             
             const randomLeft = Math.floor(Math.random() * 70) + 10;
             item.style.left = `${randomLeft}vw`;
-            
             const fallDuration = Math.random() * 4 + 6;
             item.style.animationDuration = `${fallDuration}s`;
             
             item.onpointerdown = function(e) {
                 e.preventDefault(); 
-                
                 if(this.dataset.clicked === 'true') return;
                 this.dataset.clicked = 'true';
-
                 this.style.animationPlayState = 'paused';
 
                 if (this.dataset.type === 'correct') {
-                    score += 10; 
-                    scoreDisplay.innerText = score;
-                    playCorrectSound();
-                    
+                    score += 10; document.getElementById('score').innerText = score; playCorrectSound();
                     this.innerHTML = '<span class="text-6xl" style="filter: drop-shadow(0px 4px 0px #1e293b);">⭐</span>'; 
                     this.classList.add('correct-anim');
-                    
                 } else {
                     playWrongSound();
                     this.innerHTML = '<span class="text-6xl" style="filter: drop-shadow(0px 4px 0px #1e293b);">❌</span>';
                     this.classList.add('wrong-anim');
                 }
-                
-                setTimeout(() => {
-                    if (this.parentNode) {
-                        this.parentNode.removeChild(this);
-                    }
-                }, 400);
+                setTimeout(() => { if (this.parentNode) this.parentNode.removeChild(this); }, 400);
             };
             
             item.addEventListener('animationend', function(e) {
-                if (e.animationName === 'fallDown' && this.parentNode) {
-                    this.parentNode.removeChild(this);
-                }
+                if (e.animationName === 'fallDown' && this.parentNode) this.parentNode.removeChild(this);
             });
-
-            itemsContainer.appendChild(item);
+            document.getElementById('items-container').appendChild(item);
         }
 
         function endGame() {
             isPlaying = false;
-            clearInterval(gameInterval);
-            clearInterval(spawnInterval);
-            
-            gameArea.style.display = 'none';
-            endScreen.classList.remove('hidden');
-            
-            finalScoreDisplay.innerText = score;
+            clearInterval(gameInterval); clearInterval(spawnInterval);
+            hideAllScreens();
+            document.getElementById('end-screen').style.display = 'flex';
+            document.getElementById('final-score').innerText = score;
         }
 
-        function resetGame() {
-            startScreen.classList.remove('hidden');
-            endScreen.classList.add('hidden');
-            document.getElementById('game-2-area').style.display = 'none';
-        }
 
         // ==========================================
-        // LOGIK PERINGKAT 2 (MULTI-TOUCH SMARTBOARD)
+        // LOGIK PERINGKAT 2 (LABEL POSTER SMARTBOARD)
         // ==========================================
-
-        const game2Area = document.getElementById('game-2-area');
         
-        const labelWords = [
-            { id: 'teks', text: 'Teks' },
-            { id: 'grafik', text: 'Grafik' },
-            { id: 'animasi', text: 'Animasi' },
-            { id: 'audio', text: 'Audio' },
-            { id: 'video', text: 'Video' }
-        ];
+        let draggablesData = [];
 
-        function shuffle(array) {
-            let currentIndex = array.length,  randomIndex;
-            while (currentIndex > 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        function startPenutup() {
+            hideAllScreens();
+            // Tunjuk game area dulu supaya getBoundingClientRect berfungsi dgn tepat
+            document.getElementById('game-2-area').style.display = 'flex';
+            initAudio();
+            
+            // Tunggu sebentar untuk render UI sebelum letak bongkah
+            setTimeout(initDragAndDrop, 50);
+            
+            const bgMusic = document.getElementById('bg-music');
+            if(bgMusic) {
+                bgMusic.currentTime = 0;
+                bgMusic.play().catch(e => console.log("Perlu klik skrin untuk audio."));
             }
-            return array;
-        }
-
-        function goToPeringkat2() {
-            endScreen.classList.add('hidden');
-            game2Area.style.display = 'flex'; // Paparkan Skrin Terbelah
-            initDragAndDrop();
         }
 
         function initDragAndDrop() {
-            // Setup Murid 1
-            const pool1 = document.getElementById('pool-player1');
-            pool1.innerHTML = '';
-            shuffle([...labelWords]).forEach(lbl => {
+            // Bersihkan bongkah lama jika ada
+            document.querySelectorAll('.draggable').forEach(el => el.remove());
+            document.querySelectorAll('.dropzone').forEach(z => {
+                z.dataset.filledWith = '';
+                z.style.borderColor = '#94a3b8'; // kembalikan warna asal dash
+            });
+
+            draggablesData = [
+                { id: 'p1-teks', text: 'Teks', type: 'teks', player: 1, color: 'blue' },
+                { id: 'p1-grafik', text: 'Grafik', type: 'grafik', player: 1, color: 'blue' },
+                { id: 'p2-teks', text: 'Teks', type: 'teks', player: 2, color: 'pink' },
+                { id: 'p2-grafik', text: 'Grafik', type: 'grafik', player: 2, color: 'pink' }
+            ];
+
+            draggablesData.forEach(item => {
                 const el = document.createElement('div');
-                el.className = 'draggable bg-blue-100 border-blue-800';
-                el.innerText = lbl.text;
-                el.dataset.id = lbl.id;
-                el.dataset.player = "1";
-                pool1.appendChild(el);
-            });
+                el.id = item.id;
+                
+                // Reka bentuk bongkah mengikut gambar (Biru untuk P1, Pink untuk P2)
+                const borderColor = item.color === 'blue' ? 'border-blue-600' : 'border-pink-500';
+                const textColor = item.color === 'blue' ? 'text-blue-700' : 'text-pink-600';
+                
+                el.className = `draggable w-20 md:w-28 h-10 md:h-12 border-[3px] ${borderColor} ${textColor} text-base md:text-xl`;
+                el.innerText = item.text;
+                el.dataset.type = item.type;
+                el.dataset.player = item.player;
+                
+                document.getElementById('game-2-area').appendChild(el);
+                
+                // Set posisi awal di dalam container putih
+                resetDraggablePosition(el);
 
-            // Reset Kotak Murid 1
-            document.querySelectorAll('.dropzone[data-player="1"]').forEach(dz => {
-                const icon = dz.querySelector('.drop-icon').outerHTML;
-                dz.innerHTML = icon + ' ........'; 
-                dz.dataset.filled = "";
-            });
-
-            // Setup Murid 2
-            const pool2 = document.getElementById('pool-player2');
-            pool2.innerHTML = '';
-            shuffle([...labelWords]).forEach(lbl => {
-                const el = document.createElement('div');
-                el.className = 'draggable bg-pink-100 border-pink-800';
-                el.innerText = lbl.text;
-                el.dataset.id = lbl.id;
-                el.dataset.player = "2";
-                pool2.appendChild(el);
-            });
-
-            // Reset Kotak Murid 2
-            document.querySelectorAll('.dropzone[data-player="2"]').forEach(dz => {
-                const icon = dz.querySelector('.drop-icon').outerHTML;
-                dz.innerHTML = icon + ' ........';
-                dz.dataset.filled = "";
+                // Tambah Event Listener untuk Multi-Touch / Drag
+                el.addEventListener('pointerdown', handleDragStart);
             });
         }
 
-        /* --- PENGESANAN MULTI-TOUCH UNTUK SMARTBOARD --- */
-        let activePointers = {};
-
-        function handlePointerDown(e) {
-            if (e.target.classList.contains('draggable')) {
-                e.preventDefault(); 
-                const item = e.target;
-                item.setPointerCapture(e.pointerId);
-                
-                const rect = item.getBoundingClientRect();
-                
-                item.classList.add('dragging');
-                item.style.position = 'fixed';
-                item.style.left = rect.left + 'px';
-                item.style.top = rect.top + 'px';
-                
-                // Simpan maklumat sentuhan (supaya 2 jari boleh drag asing-asing)
-                activePointers[e.pointerId] = {
-                    element: item,
-                    offsetX: e.clientX - rect.left,
-                    offsetY: e.clientY - rect.top,
-                    player: item.dataset.player
-                };
-
-                // Jika diambil dari dropzone, kosongkan data dropzone tersebut
-                if (item.parentNode.classList.contains('dropzone')) {
-                    item.parentNode.dataset.filled = "";
-                    const icon = item.parentNode.querySelector('.drop-icon').outerHTML;
-                    item.parentNode.innerHTML = icon + ' ........';
-                }
-                
-                document.body.appendChild(item); 
-            }
-        }
-
-        function handlePointerMove(e) {
-            const pointer = activePointers[e.pointerId];
-            if (pointer) {
-                pointer.element.style.left = (e.clientX - pointer.offsetX) + 'px';
-                pointer.element.style.top = (e.clientY - pointer.offsetY) + 'px';
-            }
-        }
-
-        function handlePointerUp(e) {
-            const pointer = activePointers[e.pointerId];
-            if (pointer) {
-                const item = pointer.element;
-                item.releasePointerCapture(e.pointerId);
-                item.classList.remove('dragging');
-                
-                // Cari titik tengah objek yang sedang di-drag
-                const rect = item.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                // Semak perlanggaran (collision) dengan dropzone milik murid tersebut sahaja
-                const dropZones = document.querySelectorAll(`.dropzone[data-player="${pointer.player}"]`);
-                let dropped = false;
-
-                dropZones.forEach(zone => {
-                    const zRect = zone.getBoundingClientRect();
-                    if (centerX >= zRect.left && centerX <= zRect.right &&
-                        centerY >= zRect.top && centerY <= zRect.bottom) {
-                        
-                        // Letak dalam kotak jika ia kosong
-                        if (!zone.dataset.filled) {
-                            const icon = zone.querySelector('.drop-icon').outerHTML;
-                            zone.innerHTML = icon; 
-                            
-                            item.style.position = 'static';
-                            zone.appendChild(item);
-                            zone.dataset.filled = item.dataset.id;
-                            dropped = true;
-                        }
-                    }
-                });
-
-                // Jika terlepas di luar kotak, kembalikan ke tempat asal (pool)
-                if (!dropped) {
-                    const pool = document.getElementById(`pool-player${pointer.player}`);
-                    item.style.position = 'static';
-                    pool.appendChild(item);
-                }
-
-                delete activePointers[e.pointerId];
-            }
-        }
-
-        // Daftar event listener untuk Smartboard (Touch & Mouse sokongan serentak)
-        document.addEventListener('pointerdown', handlePointerDown);
-        document.addEventListener('pointermove', handlePointerMove);
-        document.addEventListener('pointerup', handlePointerUp);
-        document.addEventListener('pointercancel', handlePointerUp); // Penting jika jari tergelincir dari skrin
-
-        // --- SISTEM PEMARKAHAN & PUJIAN ---
-        function checkAnswer(player) {
-            let score = 0;
-            const dropZones = document.querySelectorAll(`.dropzone[data-player="${player}"]`);
+        function handleDragStart(e) {
+            e.preventDefault();
+            const el = e.target;
+            el.style.transition = 'none';
+            el.style.zIndex = 100;
             
-            // Kira jawapan yang betul
-            dropZones.forEach(zone => {
-                if (zone.dataset.zone === zone.dataset.filled) {
+            // Keluarkan status dari dropzone jika ia diambil semula
+            document.querySelectorAll(`.dropzone[data-player="${el.dataset.player}"]`).forEach(z => {
+                if (z.dataset.filledWith === el.dataset.type) {
+                    z.dataset.filledWith = '';
+                    z.style.borderColor = '#94a3b8';
+                }
+            });
+
+            moveAt(e.pageX, e.pageY, el);
+
+            const pointerMoveHandler = (ev) => {
+                if(ev.pointerId === e.pointerId) moveAt(ev.pageX, ev.pageY, el);
+            };
+
+            const pointerUpHandler = (ev) => {
+                if(ev.pointerId === e.pointerId) {
+                    document.removeEventListener('pointermove', pointerMoveHandler);
+                    document.removeEventListener('pointerup', pointerUpHandler);
+                    handleDragEnd(el, ev.clientX, ev.clientY);
+                }
+            };
+
+            document.addEventListener('pointermove', pointerMoveHandler);
+            document.addEventListener('pointerup', pointerUpHandler);
+        }
+
+        function moveAt(pageX, pageY, el) {
+            el.style.left = pageX - el.offsetWidth / 2 + 'px';
+            el.style.top = pageY - el.offsetHeight / 2 + 'px';
+        }
+
+        function handleDragEnd(el, clientX, clientY) {
+            el.style.zIndex = 50;
+            
+            el.style.display = 'none';
+            const elemBelow = document.elementFromPoint(clientX, clientY);
+            el.style.display = 'flex';
+
+            if (!elemBelow) {
+                resetDraggablePosition(el);
+                return;
+            }
+
+            const dropzone = elemBelow.closest('.dropzone');
+            
+            // Pastikan murid letak di kawasan sendiri sahaja
+            if (dropzone && dropzone.dataset.player === el.dataset.player && dropzone.dataset.filledWith === '') {
+                // Berjaya Letak (Snap to zone)
+                el.style.transition = 'all 0.2s ease-out';
+                const rect = dropzone.getBoundingClientRect();
+                
+                // Letak di tengah-tengah dropzone
+                el.style.left = rect.left + (rect.width - el.offsetWidth)/2 + 'px';
+                el.style.top = rect.top + (rect.height - el.offsetHeight)/2 + 'px';
+
+                dropzone.dataset.filledWith = el.dataset.type;
+                
+                // Tukar warna garisan dashed untuk nampak seragam
+                dropzone.style.borderColor = el.dataset.player === '1' ? '#2563eb' : '#ec4899';
+                playCorrectSound();
+            } else {
+                // Gagal letak, kembali ke asal
+                resetDraggablePosition(el);
+            }
+        }
+
+        function resetDraggablePosition(el) {
+            el.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            const container = document.getElementById(`drag-container-${el.dataset.player}`);
+            if(!container) return;
+            
+            const rect = container.getBoundingClientRect();
+            
+            // Susun secara bersebelahan di tengah container
+            let isSecond = el.dataset.type === 'grafik';
+            let gap = 20;
+            let totalWidth = (el.offsetWidth * 2) + gap;
+            let startX = rect.left + (rect.width - totalWidth) / 2;
+            
+            let posX = isSecond ? startX + el.offsetWidth + gap : startX;
+            let posY = rect.top + (rect.height - el.offsetHeight) / 2;
+            
+            el.style.left = posX + 'px';
+            el.style.top = posY + 'px';
+        }
+
+        // Semak jawapan untuk Murid 1 atau Murid 2
+        function checkAnswers(player) {
+            let score = 0;
+            const zones = document.querySelectorAll(`.dropzone[data-player="${player}"]`);
+            
+            zones.forEach(zone => {
+                if (zone.dataset.filledWith === zone.dataset.zone) {
                     score++;
                 }
             });
 
-            // Papar Modal Keputusan
-            const modal = document.getElementById(`result-modal-${player}`);
-            const scoreText = document.getElementById(`score-text-${player}`);
-            const msgText = document.getElementById(`msg-text-${player}`);
-            
-            scoreText.innerText = score;
-            
-            // Logik Pujian Mengikut Syarat Cikgu
-            if (score === 5) {
-                msgText.innerHTML = "Syabas!<br>Anda sangat hebat! 🌟";
-                msgText.className = "text-3xl font-bold text-green-600 mb-6";
-                playCorrectSound(); 
-            } else if (score >= 2) {
-                msgText.innerHTML = "Tahniah!<br>Anda telah cuba dengan baik! 👍";
-                msgText.className = "text-3xl font-bold text-sky-600 mb-6";
-                playCorrectSound();
-            } else {
-                msgText.innerHTML = "Jangan putus asa,<br>cuba lagi! 💪";
-                msgText.className = "text-3xl font-bold text-red-500 mb-6";
-                playWrongSound();
-            }
-            
-            modal.classList.remove('hidden');
+            showFeedback(score, player);
         }
 
-        function closeModal(player) {
-            document.getElementById(`result-modal-${player}`).classList.add('hidden');
+        // Paparkan Modal Keputusan
+        function showFeedback(score, player) {
+            const modal = document.getElementById('feedback-modal');
+            const content = document.getElementById('feedback-content');
+            const emoji = document.getElementById('feedback-emoji');
+            const title = document.getElementById('feedback-title');
+            const text = document.getElementById('feedback-text');
+            
+            if (score === 2) {
+                playCorrectSound();
+                emoji.innerText = '🌟';
+                title.innerText = `Syabas Murid ${player}!`;
+                title.className = "text-4xl font-heading mb-2 text-green-500";
+                text.innerText = "Anda mendapat 2/2. Hebat!";
+            } else {
+                playWrongSound();
+                emoji.innerText = '💪';
+                title.innerText = `Murid ${player}`;
+                title.className = "text-4xl font-heading mb-2 text-orange-500";
+                text.innerText = `Markah: ${score}/2. Sila cuba lagi!`;
+            }
+
+            modal.style.display = 'flex';
+            setTimeout(() => content.classList.remove('scale-95'), 10);
         }
+
+        function closeFeedback() {
+            document.getElementById('feedback-content').classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('feedback-modal').style.display = 'none';
+            }, 150);
+        }
+
+        // Menyusun semula kotak jawapan jika skrin berubah saiz (Responsive)
+        window.addEventListener('resize', () => {
+            if(document.getElementById('game-2-area').style.display === 'flex') {
+                document.querySelectorAll('.draggable').forEach(el => {
+                    const zone = document.querySelector(`.dropzone[data-player="${el.dataset.player}"][data-filled-with="${el.dataset.type}"]`);
+                    if(zone) {
+                        const rect = zone.getBoundingClientRect();
+                        el.style.transition = 'none';
+                        el.style.left = rect.left + (rect.width - el.offsetWidth)/2 + 'px';
+                        el.style.top = rect.top + (rect.height - el.offsetHeight)/2 + 'px';
+                    } else {
+                        resetDraggablePosition(el);
+                    }
+                });
+            }
+        });
 
     </script>
 </body>
