@@ -360,6 +360,18 @@
                     SEMAK JAWAPAN
                 </button>
             </div>
+            
+            <!-- Modal Maklum Balas Khusus Murid 1 -->
+            <div id="feedback-1" class="absolute top-0 left-0 w-full h-full bg-slate-900/60 z-[100] hidden flex-col items-center justify-center backdrop-blur-sm">
+                <div class="bg-white border-4 border-slate-800 rounded-3xl p-6 md:p-8 text-center max-w-[85%] shadow-[8px_8px_0px_#1e293b] transform transition-transform scale-95" id="feedback-content-1">
+                    <div id="feedback-emoji-1" class="text-6xl mb-4 animate-bounce">🌟</div>
+                    <h2 id="feedback-title-1" class="text-3xl md:text-4xl font-heading mb-2" style="-webkit-text-stroke: 1px #1e293b;">Syabas!</h2>
+                    <p id="feedback-text-1" class="text-xl md:text-2xl font-bold text-slate-700 mb-6">Anda Hebat!</p>
+                    <button onclick="closeFeedback(1)" class="font-heading kawaii-btn kawaii-btn-green text-white text-xl py-3 px-8 w-full" style="-webkit-text-stroke: 1px #064e3b;">
+                        TUTUP
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- ================= MURID 2 (KANAN) ================= -->
@@ -395,18 +407,18 @@
                     SEMAK JAWAPAN
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal Maklum Balas Peringkat 2 -->
-    <div id="feedback-modal" class="fixed top-0 left-0 w-full h-full bg-slate-900/60 z-[100] hidden flex-col items-center justify-center">
-        <div class="bg-white border-4 border-slate-800 rounded-3xl p-8 md:p-12 text-center max-w-md w-11/12 shadow-[8px_8px_0px_#1e293b] transform transition-transform scale-95" id="feedback-content">
-            <div id="feedback-emoji" class="text-7xl mb-4 animate-bounce">🌟</div>
-            <h2 id="feedback-title" class="text-4xl font-heading mb-2" style="-webkit-text-stroke: 1px #1e293b;">Syabas!</h2>
-            <p id="feedback-text" class="text-2xl font-bold text-slate-700 mb-8">Anda Hebat!</p>
-            <button onclick="closeFeedback()" class="font-heading kawaii-btn kawaii-btn-green text-white text-2xl py-3 px-10 w-full" style="-webkit-text-stroke: 1px #064e3b;">
-                TUTUP
-            </button>
+            
+            <!-- Modal Maklum Balas Khusus Murid 2 -->
+            <div id="feedback-2" class="absolute top-0 left-0 w-full h-full bg-slate-900/60 z-[100] hidden flex-col items-center justify-center backdrop-blur-sm">
+                <div class="bg-white border-4 border-slate-800 rounded-3xl p-6 md:p-8 text-center max-w-[85%] shadow-[8px_8px_0px_#1e293b] transform transition-transform scale-95" id="feedback-content-2">
+                    <div id="feedback-emoji-2" class="text-6xl mb-4 animate-bounce">🌟</div>
+                    <h2 id="feedback-title-2" class="text-3xl md:text-4xl font-heading mb-2" style="-webkit-text-stroke: 1px #1e293b;">Syabas!</h2>
+                    <p id="feedback-text-2" class="text-xl md:text-2xl font-bold text-slate-700 mb-6">Anda Hebat!</p>
+                    <button onclick="closeFeedback(2)" class="font-heading kawaii-btn kawaii-btn-green text-white text-xl py-3 px-8 w-full" style="-webkit-text-stroke: 1px #064e3b;">
+                        TUTUP
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -742,25 +754,25 @@
             showFeedback(score, player);
         }
 
-        // Paparkan Modal Keputusan
+        // Paparkan Modal Keputusan Khusus Di Ruang Murid Tersebut
         function showFeedback(score, player) {
-            const modal = document.getElementById('feedback-modal');
-            const content = document.getElementById('feedback-content');
-            const emoji = document.getElementById('feedback-emoji');
-            const title = document.getElementById('feedback-title');
-            const text = document.getElementById('feedback-text');
+            const modal = document.getElementById(`feedback-${player}`);
+            const content = document.getElementById(`feedback-content-${player}`);
+            const emoji = document.getElementById(`feedback-emoji-${player}`);
+            const title = document.getElementById(`feedback-title-${player}`);
+            const text = document.getElementById(`feedback-text-${player}`);
             
             if (score === 2) {
                 playCorrectSound();
                 emoji.innerText = '🌟';
                 title.innerText = `Syabas Murid ${player}!`;
-                title.className = "text-4xl font-heading mb-2 text-green-500";
+                title.className = "text-3xl md:text-4xl font-heading mb-2 text-green-500";
                 text.innerText = "Anda mendapat 2/2. Hebat!";
             } else {
                 playWrongSound();
                 emoji.innerText = '💪';
                 title.innerText = `Murid ${player}`;
-                title.className = "text-4xl font-heading mb-2 text-orange-500";
+                title.className = "text-3xl md:text-4xl font-heading mb-2 text-orange-500";
                 text.innerText = `Markah: ${score}/2. Sila cuba lagi!`;
             }
 
@@ -768,10 +780,10 @@
             setTimeout(() => content.classList.remove('scale-95'), 10);
         }
 
-        function closeFeedback() {
-            document.getElementById('feedback-content').classList.add('scale-95');
+        function closeFeedback(player) {
+            document.getElementById(`feedback-content-${player}`).classList.add('scale-95');
             setTimeout(() => {
-                document.getElementById('feedback-modal').style.display = 'none';
+                document.getElementById(`feedback-${player}`).style.display = 'none';
             }, 150);
         }
 
