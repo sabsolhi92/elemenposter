@@ -6,18 +6,57 @@
     <title>Kenali Elemen Poster: Teks</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Memuat turun fon pelbagai gaya untuk meniru gambar yang diberi */
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&family=Pacifico&display=swap');
 
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #f1f5f9; /* Latar belakang kelabu lembut / putih */
+            margin: 0;
             overflow: hidden;
-            touch-action: manipulation; /* Mengelakkan zoom jika ditekan dua kali di telefon */
+            touch-action: manipulation;
+            /* Latar Belakang Polka Dot Pastel Animasi */
+            background-color: #fdf4ff; /* Ungu sangat cair */
+            background-image: radial-gradient(#e879f9 2px, transparent 2px), radial-gradient(#e879f9 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            animation: scrollBg 20s linear infinite;
+        }
+
+        @keyframes scrollBg {
+            0% { background-position: 0 0, 20px 20px; }
+            100% { background-position: -40px -40px, -20px -20px; }
         }
 
         h1, h2, .font-heading {
             font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
+        }
+
+        /* Skrin Utama & Tamat: Tema Kawaii mengikut gambar (Kuning, border hitam tebal) */
+        .kawaii-box {
+            background-color: #fef08a; /* Kuning pastel */
+            border: 6px solid #1e293b; /* Garisan hitam tebal */
+            border-radius: 24px;
+            box-shadow: 10px 10px 0px #c084fc; /* Bayang ungu tebal */
+            position: relative;
+        }
+
+        /* Butang Gaya Kawaii/Neo-Brutalism */
+        .kawaii-btn {
+            background-color: #38bdf8; /* Biru terang */
+            border: 4px solid #1e293b;
+            box-shadow: 0px 8px 0px #1e293b;
+            border-radius: 9999px;
+            transition: all 0.1s;
+        }
+        .kawaii-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0px 0px 0px #1e293b;
+        }
+        .kawaii-btn-green {
+            background-color: #4ade80; /* Hijau terang */
+        }
+        .kawaii-btn-red {
+            background-color: #ef4444; /* Merah terang */
         }
 
         /* Animasi untuk objek jatuh */
@@ -26,19 +65,17 @@
             100% { top: 110vh; transform: scale(1) rotate(10deg); opacity: 1; }
         }
 
-        /* Animasi apabila tekaan betul (membesar dan hilang) */
+        /* Animasi Pop dan Shake */
         @keyframes popOut {
             0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 20px #86efac; }
+            50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 10px #4ade80); }
             100% { transform: scale(0); opacity: 0; }
         }
-
-        /* Animasi apabila tekaan salah (bergoncang) */
         @keyframes shake {
             0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
+            25% { transform: translateX(-15px) rotate(-5deg); }
+            50% { transform: translateX(15px) rotate(5deg); }
+            75% { transform: translateX(-15px) rotate(-5deg); }
             100% { transform: translateX(0); }
         }
 
@@ -53,21 +90,22 @@
             align-items: center;
             justify-content: center;
             background: white;
-            border-radius: 16px; /* Bentuk kad petak membulat seperti dalam gambar */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 2px solid #e2e8f0;
+            border-radius: 20px; 
+            /* Garisan dan bayang tebal supaya menonjol dari latar belakang */
+            border: 4px solid #1e293b; 
+            box-shadow: 6px 6px 0px rgba(30, 41, 59, 0.2);
             width: auto;
             min-width: 140px;
             height: auto;
             min-height: 120px;
             padding: 15px 25px;
-            font-size: 3rem; /* Saiz untuk emoji (jawapan salah) */
-            transition: all 0.2s;
+            font-size: 3.5rem; 
+            transition: transform 0.2s;
+            z-index: 20;
         }
 
         .falling-item:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
@@ -76,75 +114,27 @@
                 min-height: 100px;
                 font-size: 2.5rem;
                 padding: 10px 15px;
+                border-width: 3px;
+                box-shadow: 4px 4px 0px rgba(30, 41, 59, 0.2);
             }
         }
 
-        /* 1. Gaya Skrip Biru (Thank you!) */
-        .text-style-1 {
-            font-family: 'Pacifico', cursive;
-            color: #0284c7;
-            font-size: 2.2rem;
-            line-height: 1.1;
-            transform: rotate(-5deg);
-            text-align: center;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
-        }
-        
-        /* 2. Gaya Gelembung Merah Jambu (SUPER KAWAII) */
-        .text-style-2 {
-            font-family: 'Fredoka One', cursive;
-            color: #fbcfe8; /* Merah jambu cair */
-            -webkit-text-stroke: 1.5px #d946ef; /* Garis luar magenta */
-            font-size: 1.8rem;
-            line-height: 1.1;
-            text-align: center;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0px rgba(217, 70, 239, 0.2);
-        }
-
-        /* 3. Gaya Retro Hijau (YOU ARE THE best) */
-        .text-style-3 {
-            font-family: 'Fredoka One', cursive;
-            color: #166534;
-            line-height: 0.8;
-            text-align: center;
-            font-size: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .text-style-3 span {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.3em;
-            font-weight: 800;
-            color: #15803d;
-            letter-spacing: 1.5px;
-            margin-bottom: -2px;
-            text-transform: uppercase;
-        }
-
-        /* 4. Gaya Neon (GLOW) */
-        .text-style-4 {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 800;
-            color: #ffb3d9;
-            text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
-            letter-spacing: 2px;
-            font-size: 2rem;
-        }
+        /* Gaya Teks */
+        .text-style-1 { font-family: 'Pacifico', cursive; color: #0284c7; font-size: 2.2rem; transform: rotate(-5deg); }
+        .text-style-2 { font-family: 'Fredoka One', cursive; color: #fbcfe8; -webkit-text-stroke: 2px #d946ef; font-size: 1.8rem; letter-spacing: 1px; text-shadow: 3px 3px 0px #1e293b; }
+        .text-style-3 { font-family: 'Fredoka One', cursive; color: #166534; line-height: 0.8; font-size: 2.5rem; display: flex; flex-direction: column; align-items: center; text-shadow: 2px 2px 0px #86efac; }
+        .text-style-3 span { font-family: 'Nunito', sans-serif; font-size: 0.3em; font-weight: 900; color: #15803d; letter-spacing: 1.5px; margin-bottom: -2px; }
+        .text-style-4 { font-family: 'Nunito', sans-serif; font-weight: 900; color: #ffb3d9; text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f; letter-spacing: 2px; font-size: 2rem; -webkit-text-stroke: 1px #ff007f; }
 
         .correct-anim {
             animation: popOut 0.4s ease-out forwards !important;
-            background-color: #f0fdf4 !important; /* Hijau muda pudar */
-            border-color: #22c55e !important;
-            color: #15803d !important;
+            background-color: #4ade80 !important; 
+            color: white !important;
         }
-
         .wrong-anim {
             animation: shake 0.4s ease-in-out forwards !important;
-            background-color: #fef2f2 !important; /* Merah muda pudar */
-            border-color: #ef4444 !important;
-            color: #b91c1c !important;
+            background-color: #f87171 !important; 
+            color: white !important;
         }
 
         #game-area {
@@ -153,43 +143,108 @@
             height: 100vh;
             overflow: hidden;
             display: none;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        /* Hiasan Dekorasi Skrin Mula */
+        .cute-deco {
+            font-size: 4rem;
+            animation: bounce 2s infinite ease-in-out;
+            display: inline-block;
+            margin: 0 10px;
+            filter: drop-shadow(3px 3px 0px #1e293b);
+        }
+        .cute-deco:nth-child(2) { animation-delay: 0.2s; font-size: 5rem; }
+        .cute-deco:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Kotak Masa dan Markah */
+        .hud-box {
+            background-color: white;
+            border: 4px solid #1e293b;
+            box-shadow: 4px 4px 0px #1e293b;
+        }
+        
+        /* Teks Penegasan Bawah */
+        .big-instruction {
+            -webkit-text-stroke: 2px #1e293b; 
+            text-shadow: 3px 3px 0px #ef4444;
         }
     </style>
 </head>
 <body class="text-slate-800">
 
     <!-- SKRIN MULA -->
-    <div id="start-screen" class="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-b from-sky-200 to-white z-50 absolute top-0 left-0">
-        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-2xl mx-4 border-8 border-sky-400 relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 text-9xl opacity-10">📝</div>
-            <h1 class="text-4xl md:text-5xl text-sky-600 mb-6 drop-shadow-sm font-heading">Peringkat 1: Kenali Teks</h1>
-            <p class="text-xl md:text-2xl mb-6 font-bold text-slate-700">Mari kenali elemen TEKS dalam pembinaan poster!</p>
-            <div class="bg-yellow-50 p-5 rounded-2xl mb-8 text-left border-l-8 border-yellow-400 shadow-inner">
-                <p class="text-lg md:text-xl font-bold mb-3 text-yellow-700">📌 Cara Bermain:</p>
-                <ul class="text-lg md:text-xl list-disc pl-5 space-y-2 text-slate-600 font-semibold">
-                    <li>Klik pada kad yang mengandungi <b class="text-sky-600 text-xl">TEKS</b>.</li>
-                    <li>Teks boleh terdiri daripada pelbagai gaya tulisan yang menarik.</li>
-                    <li><span class="text-red-500 font-bold">JANGAN</span> klik simbol gambar, muzik, atau video!</li>
+    <div id="start-screen" class="flex flex-col items-center justify-center w-screen h-screen z-50 absolute top-0 left-0 p-4">
+        
+        <!-- Arahan Penegasan Merah (Skrin Mula) -->
+        <div class="mb-4 z-10">
+            <div class="bg-red-500 border-4 border-slate-800 rounded-full py-3 px-8 shadow-[4px_4px_0px_#1e293b] animate-pulse">
+                <p class="text-2xl md:text-4xl font-extrabold text-white tracking-wide text-center font-heading" style="text-shadow: 2px 2px 0px #991b1b;">MARI PILIH ELEMEN TEKS SAHAJA!</p>
+            </div>
+        </div>
+
+        <div class="kawaii-box p-8 md:p-10 text-center max-w-2xl w-full flex flex-col items-center">
+            
+            <h1 class="text-4xl md:text-5xl text-sky-500 mb-2 font-heading" style="-webkit-text-stroke: 1px #1e293b; text-shadow: 3px 3px 0px #1e293b;">Peringkat 1: Kenali Teks</h1>
+            <p class="text-xl font-black text-slate-700 mb-4">Pilih kotak yang mengandungi TEKS sahaja!</p>
+
+            <div class="bg-white border-4 border-slate-800 p-4 rounded-2xl mb-6 text-left w-full shadow-[4px_4px_0px_#cbd5e1]">
+                <p class="text-lg font-bold mb-2 text-slate-800">📌 Cara Bermain:</p>
+                <ul class="text-md md:text-lg list-disc pl-5 space-y-1 text-slate-700 font-bold">
+                    <li>Klik pada kad yang mengandungi <b class="text-sky-500">TEKS</b>.</li>
+                    <li>Teks mempunyai pelbagai gaya tulisan menarik.</li>
+                    <li><span class="text-red-500">JANGAN</span> klik simbol gambar, muzik, atau video!</li>
                     <li>Masa diberikan ialah <b>2 minit</b>.</li>
                 </ul>
             </div>
-            <button onclick="startGame()" class="font-heading bg-green-500 hover:bg-green-600 text-white text-3xl py-4 px-12 rounded-full shadow-[0_8px_0_rgb(22,163,74)] hover:shadow-[0_4px_0_rgb(22,163,74)] hover:translate-y-1 transition-all active:shadow-none active:translate-y-2">
+            
+            <button onclick="startGame()" class="font-heading kawaii-btn kawaii-btn-green text-white text-3xl py-4 px-12 z-10" style="-webkit-text-stroke: 1px #064e3b;">
                 MULA MAIN!
             </button>
+
+            <!-- Hiasan Komputer Comel di bawah kotak -->
+            <div class="mt-4 flex justify-center items-end">
+                <div class="cute-deco">🖨️</div>
+                <div class="cute-deco">🖥️</div>
+                <div class="cute-deco">🖱️</div>
+            </div>
         </div>
     </div>
 
     <!-- KAWASAN PERMAINAN -->
     <div id="game-area">
-        <!-- Paparan Atas (Markah & Masa) -->
-        <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-40 pointer-events-none">
-            <div class="bg-white px-6 py-3 rounded-full shadow-md border-4 border-sky-300 pointer-events-auto transform transition-transform hover:scale-105">
-                <span class="text-2xl font-bold text-sky-700 font-heading">Markah: <span id="score" class="text-3xl text-orange-500">0</span></span>
+        <!-- Paparan Atas (Markah, Masa & Butang Tamat) -->
+        <div class="absolute top-0 left-0 w-full p-2 md:p-4 flex justify-between items-start z-40 pointer-events-none">
+            
+            <!-- Kotak Markah -->
+            <div class="hud-box px-4 py-2 md:px-6 md:py-3 rounded-full pointer-events-auto">
+                <span class="text-xl md:text-2xl font-bold text-slate-800 font-heading">Markah: <span id="score" class="text-2xl md:text-3xl text-sky-500" style="-webkit-text-stroke: 1px #1e293b;">0</span></span>
             </div>
-            <div class="bg-white px-6 py-3 rounded-full shadow-md border-4 border-sky-300 pointer-events-auto flex items-center transform transition-transform hover:scale-105">
-                <span class="text-2xl mr-2">⏱️</span>
-                <span id="timer" class="text-3xl font-bold text-sky-700 font-heading">02:00</span>
+            
+            <!-- Bahagian Kanan: Masa & Butang Tamat -->
+            <div class="flex flex-col md:flex-row items-end md:items-center gap-2">
+                <div class="hud-box px-4 py-2 md:px-6 md:py-3 rounded-full pointer-events-auto flex items-center">
+                    <span class="text-xl md:text-2xl mr-2">⏱️</span>
+                    <span id="timer" class="text-2xl md:text-3xl font-bold text-slate-800 font-heading">02:00</span>
+                </div>
+                <!-- BUTANG TAMAT -->
+                <button onclick="endGame()" class="kawaii-btn kawaii-btn-red text-white font-heading px-4 py-2 md:px-6 md:py-3 pointer-events-auto" style="-webkit-text-stroke: 1px #450a0a; border-width: 3px; box-shadow: 0px 4px 0px #1e293b;">
+                    <span class="text-lg md:text-xl">TAMAT</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ARAHAN BESAR SEMASA MAIN (BAHAGIAN BAWAH) -->
+        <div class="absolute bottom-6 left-0 w-full text-center z-30 pointer-events-none px-4">
+            <div class="inline-block bg-white/70 backdrop-blur-sm border-4 border-slate-800 rounded-3xl px-6 py-2 shadow-[4px_4px_0px_#1e293b]">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl text-white font-heading animate-pulse big-instruction">
+                    PILIH TEKS SAHAJA!
+                </h2>
             </div>
         </div>
         
@@ -198,15 +253,17 @@
     </div>
 
     <!-- SKRIN TAMAT -->
-    <div id="end-screen" class="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-b from-sky-200 to-white z-50 absolute top-0 left-0 hidden">
-        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-xl mx-4 border-8 border-sky-400">
-            <h1 class="text-5xl text-orange-500 mb-4 drop-shadow-sm font-heading">Masa Tamat!</h1>
-            <p class="text-2xl mb-6 font-bold text-slate-700">Tahniah, anda telah berjaya memilih elemen TEKS!</p>
-            <div class="bg-sky-50 p-6 rounded-2xl mb-8 border-2 border-sky-100 shadow-inner">
-                <p class="text-2xl font-bold text-sky-800">Jumlah Markah Anda:</p>
-                <p class="text-7xl font-heading text-green-500 drop-shadow-md mt-4" id="final-score">0</p>
+    <div id="end-screen" class="flex flex-col items-center justify-center w-screen h-screen z-50 absolute top-0 left-0 hidden p-4">
+        <div class="kawaii-box p-8 md:p-12 text-center max-w-xl w-full">
+            <h1 class="text-5xl text-orange-400 mb-4 font-heading" style="-webkit-text-stroke: 2px #1e293b; text-shadow: 4px 4px 0px #1e293b;">Tamat!</h1>
+            <p class="text-2xl mb-6 font-black text-slate-800">Syabas! Anda hebat!</p>
+            
+            <div class="bg-white border-4 border-slate-800 p-6 rounded-2xl mb-8 shadow-[4px_4px_0px_#cbd5e1]">
+                <p class="text-2xl font-bold text-slate-700">Jumlah Markah:</p>
+                <p class="text-7xl font-heading text-green-400 mt-2" id="final-score" style="-webkit-text-stroke: 3px #1e293b; text-shadow: 5px 5px 0px #1e293b;">0</p>
             </div>
-            <button onclick="resetGame()" class="font-heading bg-sky-500 hover:bg-sky-600 text-white text-2xl py-4 px-10 rounded-full shadow-[0_8px_0_rgb(2,132,199)] hover:shadow-[0_4px_0_rgb(2,132,199)] hover:translate-y-1 transition-all active:shadow-none active:translate-y-2">
+            
+            <button onclick="resetGame()" class="font-heading kawaii-btn text-white text-2xl py-4 px-10" style="-webkit-text-stroke: 1px #0c4a6e;">
                 MAIN SEMULA
             </button>
         </div>
@@ -214,19 +271,17 @@
 
     <script>
         // --- DATA PERMAINAN ---
-        // Elemen yang betul (Teks dengan gaya pelbagai berdasarkan gambar cikgu)
         const correctItems = [
             '<div class="text-style-1">Thank<br>you!</div>',
             '<div class="text-style-2">SUPER<br>KAWAII</div>',
             '<div class="text-style-3"><span>YOU ARE THE</span>best</div>',
             '<div class="text-style-4">GLOW</div>',
             '<div class="text-style-1" style="color: #ea580c; transform: rotate(-8deg);">Hebat!</div>', 
-            '<div class="text-style-2" style="color: #a7f3d0; -webkit-text-stroke: 1.5px #059669;">KREATIF</div>', 
-            '<div class="text-style-4" style="color: #93c5fd; text-shadow: 0 0 5px #2563eb, 0 0 10px #2563eb">MANTAP</div>',
-            '<div class="text-style-3" style="color: #b91c1c;"><span>TEKS ITU</span>Penting</div>'
+            '<div class="text-style-2" style="color: #67e8f9; -webkit-text-stroke: 2px #0891b2;">KREATIF</div>', 
+            '<div class="text-style-4" style="color: #fde047; text-shadow: 0 0 5px #ca8a04, 0 0 10px #ca8a04">MANTAP</div>',
+            '<div class="text-style-3" style="color: #ef4444;"><span>TEKS ITU</span>Penting</div>'
         ];
         
-        // Elemen yang salah (Grafik, Audio, Video, Animasi)
         const wrongItems = [
             '🖼️', '🎨', '📸', // Grafik
             '🎵', '🎧', '🔊', // Audio
@@ -259,7 +314,6 @@
             }
         }
 
-        // Bunyi slice/ting yang menarik untuk tekaan betul
         function playCorrectSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
@@ -279,7 +333,6 @@
             osc.stop(audioCtx.currentTime + 0.3);
         }
 
-        // Bunyi buzzer pendek untuk tekaan salah
         function playWrongSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
@@ -315,7 +368,6 @@
             endScreen.classList.add('hidden');
             gameArea.style.display = 'block';
             
-            // Pemasa
             gameInterval = setInterval(() => {
                 timeLeft--;
                 updateTimerDisplay();
@@ -325,7 +377,6 @@
                 }
             }, 1000);
             
-            // Hasilkan objek jatuh setiap 1.5 saat (Selesa untuk murid pendidikan khas)
             spawnInterval = setInterval(spawnItem, 1500); 
         }
 
@@ -334,13 +385,12 @@
             const seconds = timeLeft % 60;
             timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            // Tukar warna merah jika kurang 10 saat
             if (timeLeft <= 10) {
-                timerDisplay.classList.remove('text-sky-700');
-                timerDisplay.classList.add('text-red-600', 'animate-pulse');
+                timerDisplay.classList.remove('text-slate-800');
+                timerDisplay.classList.add('text-red-500', 'animate-pulse');
             } else {
-                timerDisplay.classList.add('text-sky-700');
-                timerDisplay.classList.remove('text-red-600', 'animate-pulse');
+                timerDisplay.classList.add('text-slate-800');
+                timerDisplay.classList.remove('text-red-500', 'animate-pulse');
             }
         }
 
@@ -350,7 +400,6 @@
             const item = document.createElement('div');
             item.className = 'falling-item';
             
-            // 65% kemungkinan untuk keluar jawapan betul untuk memotivasikan murid
             const isCorrect = Math.random() < 0.65; 
             
             if (isCorrect) {
@@ -361,42 +410,34 @@
                 item.dataset.type = 'wrong';
             }
             
-            // Kedudukan rawak melintang (10vw hingga 80vw) supaya tak terkeluar skrin
             const randomLeft = Math.floor(Math.random() * 70) + 10;
             item.style.left = `${randomLeft}vw`;
             
-            // Kelajuan jatuh antara 6 ke 10 saat (Sederhana laju)
             const fallDuration = Math.random() * 4 + 6;
             item.style.animationDuration = `${fallDuration}s`;
             
-            // Logik klik (Menggunakan pointerdown untuk sokongan sentuhan telefon pintar yang lebih baik)
             item.onpointerdown = function(e) {
                 e.preventDefault(); 
                 
                 if(this.dataset.clicked === 'true') return;
                 this.dataset.clicked = 'true';
 
-                // Hentikan objek dari terus jatuh bila diklik
                 this.style.animationPlayState = 'paused';
 
                 if (this.dataset.type === 'correct') {
-                    // Betul
                     score += 10; 
                     scoreDisplay.innerText = score;
                     playCorrectSound();
                     
-                    // Kesan visual
-                    this.innerHTML = '<span class="text-5xl">⭐</span>'; 
+                    this.innerHTML = '<span class="text-6xl" style="filter: drop-shadow(0px 4px 0px #1e293b);">⭐</span>'; 
                     this.classList.add('correct-anim');
                     
                 } else {
-                    // Salah
                     playWrongSound();
-                    this.innerHTML = '<span class="text-5xl">❌</span>';
+                    this.innerHTML = '<span class="text-6xl" style="filter: drop-shadow(0px 4px 0px #1e293b);">❌</span>';
                     this.classList.add('wrong-anim');
                 }
                 
-                // Buang elemen selepas animasi maklum balas tamat (0.4s)
                 setTimeout(() => {
                     if (this.parentNode) {
                         this.parentNode.removeChild(this);
@@ -404,7 +445,6 @@
                 }, 400);
             };
             
-            // Buang elemen secara automatik kalau dah sampai ke bawah skrin (terlepas)
             item.addEventListener('animationend', function(e) {
                 if (e.animationName === 'fallDown' && this.parentNode) {
                     this.parentNode.removeChild(this);
