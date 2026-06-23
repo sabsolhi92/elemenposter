@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenali Elemen Poster: Teks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Memuat turun fon pelbagai gaya untuk meniru gambar yang diberi */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&family=Pacifico&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f1f5f9; /* Latar belakang kelabu lembut / putih */
+            overflow: hidden;
+            touch-action: manipulation; /* Mengelakkan zoom jika ditekan dua kali di telefon */
+        }
+
+        h1, h2, .font-heading {
+            font-family: 'Fredoka One', cursive;
+        }
+
+        /* Animasi untuk objek jatuh */
+        @keyframes fallDown {
+            0% { top: -150px; transform: scale(1) rotate(0deg); opacity: 1; }
+            100% { top: 110vh; transform: scale(1) rotate(10deg); opacity: 1; }
+        }
+
+        /* Animasi apabila tekaan betul (membesar dan hilang) */
+        @keyframes popOut {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 20px #86efac; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* Animasi apabila tekaan salah (bergoncang) */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .falling-item {
+            position: absolute;
+            animation-name: fallDown;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 16px; /* Bentuk kad petak membulat seperti dalam gambar */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 2px solid #e2e8f0;
+            width: auto;
+            min-width: 140px;
+            height: auto;
+            min-height: 120px;
+            padding: 15px 25px;
+            font-size: 3rem; /* Saiz untuk emoji (jawapan salah) */
+            transition: all 0.2s;
+        }
+
+        .falling-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .falling-item {
+                min-width: 110px;
+                min-height: 100px;
+                font-size: 2.5rem;
+                padding: 10px 15px;
+            }
+        }
+
+        /* 1. Gaya Skrip Biru (Thank you!) */
+        .text-style-1 {
+            font-family: 'Pacifico', cursive;
+            color: #0284c7;
+            font-size: 2.2rem;
+            line-height: 1.1;
+            transform: rotate(-5deg);
+            text-align: center;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+        }
+        
+        /* 2. Gaya Gelembung Merah Jambu (SUPER KAWAII) */
+        .text-style-2 {
+            font-family: 'Fredoka One', cursive;
+            color: #fbcfe8; /* Merah jambu cair */
+            -webkit-text-stroke: 1.5px #d946ef; /* Garis luar magenta */
+            font-size: 1.8rem;
+            line-height: 1.1;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px rgba(217, 70, 239, 0.2);
+        }
+
+        /* 3. Gaya Retro Hijau (YOU ARE THE best) */
+        .text-style-3 {
+            font-family: 'Fredoka One', cursive;
+            color: #166534;
+            line-height: 0.8;
+            text-align: center;
+            font-size: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .text-style-3 span {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.3em;
+            font-weight: 800;
+            color: #15803d;
+            letter-spacing: 1.5px;
+            margin-bottom: -2px;
+            text-transform: uppercase;
+        }
+
+        /* 4. Gaya Neon (GLOW) */
+        .text-style-4 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            color: #ffb3d9;
+            text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
+            letter-spacing: 2px;
+            font-size: 2rem;
+        }
+
+        .correct-anim {
+            animation: popOut 0.4s ease-out forwards !important;
+            background-color: #f0fdf4 !important; /* Hijau muda pudar */
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+
+        .wrong-anim {
+            animation: shake 0.4s ease-in-out forwards !important;
+            background-color: #fef2f2 !important; /* Merah muda pudar */
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        #game-area {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: none;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- SKRIN MULA -->
+    <div id="start-screen" class="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-b from-sky-200 to-white z-50 absolute top-0 left-0">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-2xl mx-4 border-8 border-sky-400 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 text-9xl opacity-10">📝</div>
+            <h1 class="text-4xl md:text-5xl text-sky-600 mb-6 drop-shadow-sm font-heading">Peringkat 1: Kenali Teks</h1>
+            <p class="text-xl md:text-2xl mb-6 font-bold text-slate-700">Mari kenali elemen TEKS dalam pembinaan poster!</p>
+            <div class="bg-yellow-50 p-5 rounded-2xl mb-8 text-left border-l-8 border-yellow-400 shadow-inner">
+                <p class="text-lg md:text-xl font-bold mb-3 text-yellow-700">📌 Cara Bermain:</p>
+                <ul class="text-lg md:text-xl list-disc pl-5 space-y-2 text-slate-600 font-semibold">
+                    <li>Klik pada kad yang mengandungi <b class="text-sky-600 text-xl">TEKS</b>.</li>
+                    <li>Teks boleh terdiri daripada pelbagai gaya tulisan yang menarik.</li>
+                    <li><span class="text-red-500 font-bold">JANGAN</span> klik simbol gambar, muzik, atau video!</li>
+                    <li>Masa diberikan ialah <b>2 minit</b>.</li>
+                </ul>
+            </div>
+            <button onclick="startGame()" class="font-heading bg-green-500 hover:bg-green-600 text-white text-3xl py-4 px-12 rounded-full shadow-[0_8px_0_rgb(22,163,74)] hover:shadow-[0_4px_0_rgb(22,163,74)] hover:translate-y-1 transition-all active:shadow-none active:translate-y-2">
+                MULA MAIN!
+            </button>
+        </div>
+    </div>
+
+    <!-- KAWASAN PERMAINAN -->
+    <div id="game-area">
+        <!-- Paparan Atas (Markah & Masa) -->
+        <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-40 pointer-events-none">
+            <div class="bg-white px-6 py-3 rounded-full shadow-md border-4 border-sky-300 pointer-events-auto transform transition-transform hover:scale-105">
+                <span class="text-2xl font-bold text-sky-700 font-heading">Markah: <span id="score" class="text-3xl text-orange-500">0</span></span>
+            </div>
+            <div class="bg-white px-6 py-3 rounded-full shadow-md border-4 border-sky-300 pointer-events-auto flex items-center transform transition-transform hover:scale-105">
+                <span class="text-2xl mr-2">⏱️</span>
+                <span id="timer" class="text-3xl font-bold text-sky-700 font-heading">02:00</span>
+            </div>
+        </div>
+        
+        <!-- Bekas untuk objek jatuh -->
+        <div id="items-container" class="w-full h-full absolute top-0 left-0"></div>
+    </div>
+
+    <!-- SKRIN TAMAT -->
+    <div id="end-screen" class="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-b from-sky-200 to-white z-50 absolute top-0 left-0 hidden">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-xl mx-4 border-8 border-sky-400">
+            <h1 class="text-5xl text-orange-500 mb-4 drop-shadow-sm font-heading">Masa Tamat!</h1>
+            <p class="text-2xl mb-6 font-bold text-slate-700">Tahniah, anda telah berjaya memilih elemen TEKS!</p>
+            <div class="bg-sky-50 p-6 rounded-2xl mb-8 border-2 border-sky-100 shadow-inner">
+                <p class="text-2xl font-bold text-sky-800">Jumlah Markah Anda:</p>
+                <p class="text-7xl font-heading text-green-500 drop-shadow-md mt-4" id="final-score">0</p>
+            </div>
+            <button onclick="resetGame()" class="font-heading bg-sky-500 hover:bg-sky-600 text-white text-2xl py-4 px-10 rounded-full shadow-[0_8px_0_rgb(2,132,199)] hover:shadow-[0_4px_0_rgb(2,132,199)] hover:translate-y-1 transition-all active:shadow-none active:translate-y-2">
+                MAIN SEMULA
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA PERMAINAN ---
+        // Elemen yang betul (Teks dengan gaya pelbagai berdasarkan gambar cikgu)
+        const correctItems = [
+            '<div class="text-style-1">Thank<br>you!</div>',
+            '<div class="text-style-2">SUPER<br>KAWAII</div>',
+            '<div class="text-style-3"><span>YOU ARE THE</span>best</div>',
+            '<div class="text-style-4">GLOW</div>',
+            '<div class="text-style-1" style="color: #ea580c; transform: rotate(-8deg);">Hebat!</div>', 
+            '<div class="text-style-2" style="color: #a7f3d0; -webkit-text-stroke: 1.5px #059669;">KREATIF</div>', 
+            '<div class="text-style-4" style="color: #93c5fd; text-shadow: 0 0 5px #2563eb, 0 0 10px #2563eb">MANTAP</div>',
+            '<div class="text-style-3" style="color: #b91c1c;"><span>TEKS ITU</span>Penting</div>'
+        ];
+        
+        // Elemen yang salah (Grafik, Audio, Video, Animasi)
+        const wrongItems = [
+            '🖼️', '🎨', '📸', // Grafik
+            '🎵', '🎧', '🔊', // Audio
+            '🎬', '🎥', '📺', // Video
+            '✨', '🏃', '🎇'  // Animasi
+        ];
+
+        // --- PEMBOLEH UBAH PERMAINAN ---
+        let score = 0;
+        let timeLeft = 120; // 2 minit
+        let gameInterval;
+        let spawnInterval;
+        let audioCtx;
+        let isPlaying = false;
+
+        const startScreen = document.getElementById('start-screen');
+        const gameArea = document.getElementById('game-area');
+        const endScreen = document.getElementById('end-screen');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+        const itemsContainer = document.getElementById('items-container');
+        const finalScoreDisplay = document.getElementById('final-score');
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Bunyi slice/ting yang menarik untuk tekaan betul
+        function playCorrectSound() {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'sine'; 
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+            osc.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.1); 
+            
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); 
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        // Bunyi buzzer pendek untuk tekaan salah
+        function playWrongSound() {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'square'; 
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+            
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function startGame() {
+            initAudio(); 
+            
+            score = 0;
+            timeLeft = 120;
+            isPlaying = true;
+            
+            scoreDisplay.innerText = score;
+            updateTimerDisplay();
+            
+            itemsContainer.innerHTML = ''; 
+            
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameArea.style.display = 'block';
+            
+            // Pemasa
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            // Hasilkan objek jatuh setiap 1.5 saat (Selesa untuk murid pendidikan khas)
+            spawnInterval = setInterval(spawnItem, 1500); 
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Tukar warna merah jika kurang 10 saat
+            if (timeLeft <= 10) {
+                timerDisplay.classList.remove('text-sky-700');
+                timerDisplay.classList.add('text-red-600', 'animate-pulse');
+            } else {
+                timerDisplay.classList.add('text-sky-700');
+                timerDisplay.classList.remove('text-red-600', 'animate-pulse');
+            }
+        }
+
+        function spawnItem() {
+            if (!isPlaying) return;
+
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            
+            // 65% kemungkinan untuk keluar jawapan betul untuk memotivasikan murid
+            const isCorrect = Math.random() < 0.65; 
+            
+            if (isCorrect) {
+                item.innerHTML = correctItems[Math.floor(Math.random() * correctItems.length)];
+                item.dataset.type = 'correct';
+            } else {
+                item.innerHTML = wrongItems[Math.floor(Math.random() * wrongItems.length)];
+                item.dataset.type = 'wrong';
+            }
+            
+            // Kedudukan rawak melintang (10vw hingga 80vw) supaya tak terkeluar skrin
+            const randomLeft = Math.floor(Math.random() * 70) + 10;
+            item.style.left = `${randomLeft}vw`;
+            
+            // Kelajuan jatuh antara 6 ke 10 saat (Sederhana laju)
+            const fallDuration = Math.random() * 4 + 6;
+            item.style.animationDuration = `${fallDuration}s`;
+            
+            // Logik klik (Menggunakan pointerdown untuk sokongan sentuhan telefon pintar yang lebih baik)
+            item.onpointerdown = function(e) {
+                e.preventDefault(); 
+                
+                if(this.dataset.clicked === 'true') return;
+                this.dataset.clicked = 'true';
+
+                // Hentikan objek dari terus jatuh bila diklik
+                this.style.animationPlayState = 'paused';
+
+                if (this.dataset.type === 'correct') {
+                    // Betul
+                    score += 10; 
+                    scoreDisplay.innerText = score;
+                    playCorrectSound();
+                    
+                    // Kesan visual
+                    this.innerHTML = '<span class="text-5xl">⭐</span>'; 
+                    this.classList.add('correct-anim');
+                    
+                } else {
+                    // Salah
+                    playWrongSound();
+                    this.innerHTML = '<span class="text-5xl">❌</span>';
+                    this.classList.add('wrong-anim');
+                }
+                
+                // Buang elemen selepas animasi maklum balas tamat (0.4s)
+                setTimeout(() => {
+                    if (this.parentNode) {
+                        this.parentNode.removeChild(this);
+                    }
+                }, 400);
+            };
+            
+            // Buang elemen secara automatik kalau dah sampai ke bawah skrin (terlepas)
+            item.addEventListener('animationend', function(e) {
+                if (e.animationName === 'fallDown' && this.parentNode) {
+                    this.parentNode.removeChild(this);
+                }
+            });
+
+            itemsContainer.appendChild(item);
+        }
+
+        function endGame() {
+            isPlaying = false;
+            clearInterval(gameInterval);
+            clearInterval(spawnInterval);
+            
+            gameArea.style.display = 'none';
+            endScreen.classList.remove('hidden');
+            
+            finalScoreDisplay.innerText = score;
+        }
+
+        function resetGame() {
+            startScreen.classList.remove('hidden');
+            endScreen.classList.add('hidden');
+        }
+
+    </script>
+</body>
+</html>
